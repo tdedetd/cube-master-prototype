@@ -19,4 +19,12 @@ function init() {
     canvas.height,
     canvas.getContext('2d')
   );
+
+  canvas.addEventListener('mousemove', e => {
+    renderer.mouseMove(e.offsetX, e.offsetY);
+  });
+
+  canvas.addEventListener('mouseleave', _ => {
+    renderer.clearSelection();
+  });
 }

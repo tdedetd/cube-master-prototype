@@ -1,4 +1,5 @@
 import { Color } from "./color";
+import { Point } from './point';
 import { CubeGame } from "./cube-game";
 
 export class CubeGameRenderer {
@@ -12,33 +13,45 @@ export class CubeGameRenderer {
     this._game = game;
     this._width = width;
     this._height = height;
-    this._startX = 0;
-    this._startY = 0;
+
+    /** @type {Point} */
+    this._startCoords = new Point(0, 0);
+
+    /** @type {Point} */
+    this._selectedCube = null;
+
     this._ctx = ctx;
     this._cellLength = this._computeCellLength();
-    this._selectedX = null;
-    this._selectedY = null;
 
     this._draw();
   }
 
   clearSelection() {
-    this._selectedX = null;
-    this._selectedY = null;
+    this._selectedCube = null;
     this._draw();
   }
 
   /**
-   * @param {number} x
-   * @param {number} y
+   * @param {Point} coords 
    */
-  mouseMove(x, y) {
-    const selectedX = Math.floor((x - this._startX) / this._cellLength);
-    const selectedY = Math.floor((y - this._startY) / this._cellLength);
+  mouseMove(coords) {
+    const selectedX = Math.floor((coords.x - this._startCoords.x) / this._cellLength);
+    const selectedY = Math.floor((coords.y - this._startCoords.y) / this._cellLength);
 
-    if (this._selectedX !== selectedX || this._selectedY !== selectedY) {
-      this._selectedX = selectedX;
-      this._selectedY = selectedY;
+    let newSelectedCube;
+
+    if (selectedX >= 0 && selectedX < this._game.width && selectedY >= 0 && selectedY < this._game.height) {
+      newSelectedCube = new Point(selectedX, selectedY);
+    } else {
+      newSelectedCube = null;
+    }
+
+    if (
+      newSelectedCube !== null && this._selectedCube === null
+      || newSelectedCube === null && this._selectedCube !== null
+      || newSelectedCube !== null && this._selectedCube !== null && !this._selectedCube.equals(newSelectedCube)
+    ) {
+      this._selectedCube = newSelectedCube;
       this._draw();
     }
   }
@@ -55,15 +68,23 @@ export class CubeGameRenderer {
 
         if (color) {
           this._ctx.fillStyle = this._getColorString(color);
-          this._ctx.fillRect(x * length, y * length, length, length);
+          this._ctx.fillRect(
+            this._startCoords.x + x * length,
+            this._startCoords.y + y * length,
+            length, length
+          );
         }
       }
     }
 
-    if (this._selectedX !== null && this._selectedY !== null) {
+    if (this._selectedCube) {
       this._ctx.strokeStyle = 'white';
       this._ctx.lineWidth = 2;
-      this._ctx.strokeRect(this._selectedX * length, this._selectedY * length, length, length);
+      this._ctx.strokeRect(
+        this._startCoords.x + this._selectedCube.x * length,
+        this._startCoords.y + this._selectedCube.y * length,
+        length, length
+      );
     }
   }
 

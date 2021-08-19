@@ -1,5 +1,6 @@
 import { CubeGame } from "./cube-game";
 import { CubeGameRenderer } from "./cube-game-renderer";
+import { Point } from "./point";
 
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(init);
@@ -21,7 +22,7 @@ function init() {
   );
 
   canvas.addEventListener('mousemove', e => {
-    renderer.mouseMove(e.offsetX, e.offsetY);
+    renderer.mouseMove(new Point(e.offsetX, e.offsetY));
   });
 
   canvas.addEventListener('mouseleave', _ => {

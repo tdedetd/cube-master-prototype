@@ -21,8 +21,12 @@ function init() {
     canvas.getContext('2d')
   );
 
+  canvas.addEventListener('click', e => {
+    renderer.onClick(new Point(e.offsetX, e.offsetY));
+  });
+
   canvas.addEventListener('mousemove', e => {
-    renderer.mouseMove(new Point(e.offsetX, e.offsetY));
+    renderer.onMouseMove(new Point(e.offsetX, e.offsetY));
   });
 
   canvas.addEventListener('mouseleave', _ => {

@@ -35,7 +35,14 @@ export class CubeGameRenderer {
   /**
    * @param {Point} coords
    */
-  mouseMove(coords) {
+  onClick(coords) {
+    this._game.destroy();
+  }
+
+  /**
+   * @param {Point} coords
+   */
+  onMouseMove(coords) {
     const selectedX = Math.floor((coords.x - this._startCoords.x) / this._cellLength);
     const selectedY = Math.floor((coords.y - this._startCoords.y) / this._cellLength);
 

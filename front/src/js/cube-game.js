@@ -26,7 +26,14 @@ export class CubeGame {
     this.selection = [];
   }
 
-  /** @type {Point} */
+  destroy() {
+    console.log(this.selection);
+    console.log(`${this.selection.length ** 2} points!`);
+  }
+
+  /**
+   * @param {Point} point 
+   */
   select(point) {
     this.selection = this._getSelection(point);
   }

@@ -1,4 +1,6 @@
 import { Color } from './color';
+import { Point } from './point';
+import { Filler } from "./filler";
 
 /** @type {Color[]} */
 const COLORS = [
@@ -19,6 +21,14 @@ export class CubeGame {
 
     /** @type {Color[][]} */
     this.colors = this._generate();
+
+    /** @type {Point[]} */
+    this.selection = [];
+  }
+
+  /** @type {Point} */
+  select(point) {
+    this.selection = this._getSelection(point);
   }
 
   _generate() {
@@ -35,5 +45,14 @@ export class CubeGame {
     }
 
     return colors;
+  }
+
+  _getSelection(point) {
+    if (!point || !this.colors[point.x][point.y]) return [];
+
+    const selection = new Filler().fill(this.colors, point, this.width, this.height);
+    if (selection.length === 1) return [];
+
+    return selection;
   }
 }

@@ -28,11 +28,12 @@ export class CubeGameRenderer {
 
   clearSelection() {
     this._selectedCube = null;
+    this._game.selection = [];
     this._draw();
   }
 
   /**
-   * @param {Point} coords 
+   * @param {Point} coords
    */
   mouseMove(coords) {
     const selectedX = Math.floor((coords.x - this._startCoords.x) / this._cellLength);
@@ -52,8 +53,17 @@ export class CubeGameRenderer {
       || newSelectedCube !== null && this._selectedCube !== null && !this._selectedCube.equals(newSelectedCube)
     ) {
       this._selectedCube = newSelectedCube;
+
+      if (!this._game.selection.find(p => p.equals(this._selectedCube))) {
+        this._game.select(this._selectedCube);
+      }
+
       this._draw();
     }
+  }
+
+  _computeCellLength() {
+    return Math.floor(Math.min(this._width / this._game.width, this._height / this._game.height));
   }
 
   _draw() {
@@ -77,15 +87,14 @@ export class CubeGameRenderer {
       }
     }
 
-    if (this._selectedCube) {
+    this._game.selection.forEach(p => {
       this._ctx.strokeStyle = 'white';
-      this._ctx.lineWidth = 2;
       this._ctx.strokeRect(
-        this._startCoords.x + this._selectedCube.x * length,
-        this._startCoords.y + this._selectedCube.y * length,
+        this._startCoords.x + p.x * length,
+        this._startCoords.y + p.y * length,
         length, length
       );
-    }
+    });
   }
 
   /**
@@ -93,9 +102,5 @@ export class CubeGameRenderer {
    */
   _getColorString(color) {
     return `rgb(${color.r}, ${color.g}, ${color.b})`;
-  }
-
-  _computeCellLength() {
-    return Math.floor(Math.min(this._width / this._game.width, this._height / this._game.height));
   }
 }

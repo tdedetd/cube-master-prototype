@@ -32,11 +32,11 @@ export class CubeGameRenderer {
     this._draw();
   }
 
-  /**
-   * @param {Point} coords
-   */
-  onClick(coords) {
-    this._game.destroy();
+  onClick() {
+    if (this._game.selection.length > 0) {
+      this._game.destroy();
+      this._draw();
+    }
   }
 
   /**
@@ -61,7 +61,7 @@ export class CubeGameRenderer {
     ) {
       this._selectedCube = newSelectedCube;
 
-      if (!this._game.selection.find(p => p.equals(this._selectedCube))) {
+      if (this._selectedCube && !this._game.selection.find(p => p.equals(this._selectedCube))) {
         this._game.select(this._selectedCube);
       }
 

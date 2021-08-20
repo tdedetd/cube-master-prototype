@@ -13,7 +13,7 @@ function init() {
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
 
-  const game = new CubeGame(50, 25);
+  const game = new CubeGame(10, 5);
   const renderer = new CubeGameRenderer(
     game,
     canvas.width,
@@ -21,8 +21,8 @@ function init() {
     canvas.getContext('2d')
   );
 
-  canvas.addEventListener('click', e => {
-    renderer.onClick(new Point(e.offsetX, e.offsetY));
+  canvas.addEventListener('click', _ => {
+    renderer.onClick();
   });
 
   canvas.addEventListener('mousemove', e => {

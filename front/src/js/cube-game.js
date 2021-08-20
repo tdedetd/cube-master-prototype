@@ -22,13 +22,34 @@ export class CubeGame {
     /** @type {Color[][]} */
     this.colors = this._generate();
 
+    /** @type {number} */
+    this.score = 0;
+
     /** @type {Point[]} */
     this.selection = [];
   }
 
   destroy() {
-    console.log(this.selection);
-    console.log(`${this.selection.length ** 2} points!`);
+    if (this.selection.length === 0) return;
+
+    this.score += this.selection.length ** 2;
+
+    this.selection.forEach(p => {
+      this.colors[p.x][p.y] = null;
+    });
+    const xMin = Math.min(...this.selection.map(p => p.x));
+    const xMax = Math.max(...this.selection.map(p => p.x));
+
+    for (let x = xMin; x <= xMax; x++) {
+      const countEmpty = 0;
+      const landY = this.height - 1;
+      for (let y = this.height - 1; y >=0; y--) {
+        
+      }
+    }
+
+    this._resetSelection();
+    console.log('score', this.score);
   }
 
   /**
@@ -61,5 +82,9 @@ export class CubeGame {
     if (selection.length === 1) return [];
 
     return selection;
+  }
+
+  _resetSelection() {
+    this.selection = [];
   }
 }

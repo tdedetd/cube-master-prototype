@@ -5,11 +5,11 @@ import { fall } from './utils';
 
 /** @type {Color[]} */
 const COLORS = [
-  { r: 222, g: 41, b: 36 }, // red
-  { r: 0, g: 128, b: 0 }, // green
-  { r: 81, g: 105, b: 230 }, // blue
-  { r: 241, g: 176, b: 58 }, // gold
-  { r: 132, g: 89, b: 218 } // purple
+  new Color(222, 41, 36), // red
+  new Color(0, 128, 0), // green
+  new Color(81, 105, 230), // blue
+  new Color(241, 176, 58), // gold
+  new Color(132, 89, 218), // purple
 ];
 
 export class CubeGame {

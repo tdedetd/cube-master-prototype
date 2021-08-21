@@ -1,6 +1,6 @@
 /**
- * @param {any[]} list 
- * @param {Function} checkEmpty 
+ * @param {any[]} list
+ * @param {Function} checkEmpty
  * @returns {boolean}
  */
 export function fall(list, checkEmpty) {

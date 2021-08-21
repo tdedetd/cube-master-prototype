@@ -1,4 +1,3 @@
-import { Color } from "./color";
 import { Point } from './point';
 import { CubeGame } from "./cube-game";
 
@@ -88,7 +87,7 @@ export class CubeGameRenderer {
         color = game.colors[x][y];
 
         if (color) {
-          this._ctx.fillStyle = this._getColorString(color);
+          this._ctx.fillStyle = color.getString();
           this._ctx.fillRect(
             this._startCoords.x + x * length,
             this._startCoords.y + y * length,
@@ -106,13 +105,6 @@ export class CubeGameRenderer {
         length, length
       );
     });
-  }
-
-  /**
-   * @param {Color} color 
-   */
-  _getColorString(color) {
-    return `rgb(${color.r}, ${color.g}, ${color.b})`;
   }
 
   _updateCursor() {

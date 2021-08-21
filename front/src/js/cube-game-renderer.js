@@ -35,6 +35,7 @@ export class CubeGameRenderer {
   onClick() {
     if (this._game.selection.length > 0) {
       this._game.destroy();
+      this._game.select(this._selectedCube);
       this._draw();
     }
   }

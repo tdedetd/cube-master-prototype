@@ -1,6 +1,7 @@
 import { Color } from './color';
 import { Point } from './point';
 import { Filler } from "./filler";
+import { fall } from './utils';
 
 /** @type {Color[]} */
 const COLORS = [
@@ -41,15 +42,12 @@ export class CubeGame {
     const xMax = Math.max(...this.selection.map(p => p.x));
 
     for (let x = xMin; x <= xMax; x++) {
-      const countEmpty = 0;
-      const landY = this.height - 1;
-      for (let y = this.height - 1; y >=0; y--) {
-        
-      }
+      fall(this.colors[x]);
     }
 
+    fall(this.colors, col => col[col.length - 1]);
+
     this._resetSelection();
-    console.log('score', this.score);
   }
 
   /**

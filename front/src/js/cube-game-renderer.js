@@ -35,9 +35,9 @@ export class CubeGameRenderer {
   onClick() {
     if (this._game.selection.length > 0) {
       this._game.destroy();
+      console.log(this._game.getStatus());
       this._select();
       this._draw();
-      if (this._game.checkGameOver()) console.log('game over!'); 
     }
   }
 
@@ -51,6 +51,7 @@ export class CubeGameRenderer {
     if (this._selectedCube) {
       if (this._game.selection.find(p => p.equals(this._selectedCube))) {
         this._game.destroy();
+        console.log(this._game.getStatus());
       } else {
         this._select();
       }
@@ -134,6 +135,10 @@ export class CubeGameRenderer {
 
   _select() {
     this._game.select(this._selectedCube);
+
+    if (this._game.selection.length > 0) {
+      console.log(`${this._game.selection.length} selected - ${this._game.selection.length ** 2}`);
+    }
   }
 
   _updateCursor() {

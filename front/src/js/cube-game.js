@@ -28,6 +28,12 @@ export class CubeGame {
 
     /** @type {Point[]} */
     this.selection = [];
+
+    /** @type {number} */
+    this.turns = 0;
+
+    /** @type {number} */
+    this._timeStart = new Date().getTime();
   }
 
   checkGameOver() {
@@ -49,6 +55,7 @@ export class CubeGame {
     if (this.selection.length === 0) return;
 
     this.score += this.selection.length ** 2;
+    this.turns++;
 
     this.selection.forEach(p => {
       this.colors[p.x][p.y] = null;
@@ -63,6 +70,22 @@ export class CubeGame {
     fall(this.colors, col => col[col.length - 1]);
 
     this._resetSelection();
+  }
+
+  getStatus() {
+    const cubesLeft = this.colors.reduce((count, col) => {
+      return count + col.reduce((countInCol, el) => countInCol + (el ? 1 : 0), 0);
+    }, 0);
+
+    const seconds = (new Date().getTime() - this._timeStart) / 1000;
+
+    return {
+      cubesLeft,
+      gameOver: this.checkGameOver(),
+      score: this.score,
+      time: `${Math.floor(seconds / 60)} minutes ${Math.floor(seconds % 60)} seconds`,
+      turns: this.turns,
+    };
   }
 
   /**

@@ -14,7 +14,7 @@ function init() {
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
 
-  const game = new CubeGame(50, 25);
+  const game = new CubeGame(40, 20);
   const renderer = new CubeGameRenderer(
     game,
     canvas.width,

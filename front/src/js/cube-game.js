@@ -30,6 +30,21 @@ export class CubeGame {
     this.selection = [];
   }
 
+  checkGameOver() {
+    for (let x = 0; x < this.width; x++) {
+      for (let y = 0; y < this.height; y++) {
+        if (this.colors[x][y] && (
+          x + 1 < this.width && this.colors[x][y] === this.colors[x + 1][y]
+          || y + 1 < this.height && this.colors[x][y] === this.colors[x][y + 1]
+        )) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   destroy() {
     if (this.selection.length === 0) return;
 

@@ -27,17 +27,16 @@ export class CubeGameRenderer {
 
   clearSelection() {
     this._selectedCube = null;
-    this._game.select(null);
+    this._select();
     this._draw();
-    this._updateCursor();
   }
 
   onClick() {
     if (this._game.selection.length > 0) {
       this._game.destroy();
-      this._game.select(this._selectedCube);
-      this._updateCursor();
+      this._select();
       this._draw();
+      if (this._game.checkGameOver()) console.log('game over!'); 
     }
   }
 
@@ -64,8 +63,7 @@ export class CubeGameRenderer {
       this._selectedCube = newSelectedCube;
 
       if (this._selectedCube && !this._game.selection.find(p => p.equals(this._selectedCube))) {
-        this._game.select(this._selectedCube);
-        this._updateCursor();
+        this._select();
       }
 
       this._draw();
@@ -107,7 +105,8 @@ export class CubeGameRenderer {
     });
   }
 
-  _updateCursor() {
+  _select() {
+    this._game.select(this._selectedCube);
     document.body.style.cursor = this._game.selection.length > 0 ? 'pointer' : 'default';
   }
 }

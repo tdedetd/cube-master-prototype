@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function init() {
   /** @type {HTMLCanvasElement} */
   const canvas = document.getElementById('game');
+  const isTouch = Object.keys(window).indexOf('ontouchstart') !== -1;
 
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
@@ -21,15 +22,21 @@ function init() {
     canvas.getContext('2d')
   );
 
-  canvas.addEventListener('click', _ => {
-    renderer.onClick();
-  });
+  if (isTouch) {
+    canvas.addEventListener('touchstart', e => {
+      renderer.onTouch(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+    });
+  } else {
+    canvas.addEventListener('click', _ => {
+      renderer.onClick();
+    });
 
-  canvas.addEventListener('mousemove', e => {
-    renderer.onMouseMove(new Point(e.offsetX, e.offsetY));
-  });
+    canvas.addEventListener('mousemove', e => {
+      renderer.onMouseMove(new Point(e.offsetX, e.offsetY));
+    });
 
-  canvas.addEventListener('mouseleave', _ => {
-    renderer.clearSelection();
-  });
+    canvas.addEventListener('mouseleave', _ => {
+      renderer.clearSelection();
+    });
+  }
 }

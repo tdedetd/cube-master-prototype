@@ -28,6 +28,7 @@ export class CubeGameRenderer {
   clearSelection() {
     this._selectedCube = null;
     this._select();
+    this._updateCursor();
     this._draw();
   }
 
@@ -41,19 +42,29 @@ export class CubeGameRenderer {
   }
 
   /**
+   * @param {number} x
+   * @param {number} y
+   */
+  onTouch(x, y) {
+    this._selectedCube = this._determineSelectedCube(x, y);
+
+    if (this._selectedCube) {
+      if (this._game.selection.find(p => p.equals(this._selectedCube))) {
+        this._game.destroy();
+      } else {
+        this._select();
+      }
+    } else {
+      this.clearSelection();
+    }
+    this._draw();
+  }
+
+  /**
    * @param {Point} coords
    */
   onMouseMove(coords) {
-    const selectedX = Math.floor((coords.x - this._startCoords.x) / this._cellLength);
-    const selectedY = Math.floor((coords.y - this._startCoords.y) / this._cellLength);
-
-    let newSelectedCube;
-
-    if (selectedX >= 0 && selectedX < this._game.width && selectedY >= 0 && selectedY < this._game.height) {
-      newSelectedCube = new Point(selectedX, selectedY);
-    } else {
-      newSelectedCube = null;
-    }
+    const newSelectedCube = this._determineSelectedCube(coords.x, coords.y);
 
     if (
       newSelectedCube !== null && this._selectedCube === null
@@ -64,6 +75,7 @@ export class CubeGameRenderer {
 
       if (this._selectedCube && !this._game.selection.find(p => p.equals(this._selectedCube))) {
         this._select();
+        this._updateCursor();
       }
 
       this._draw();
@@ -72,6 +84,21 @@ export class CubeGameRenderer {
 
   _computeCellLength() {
     return Math.floor(Math.min(this._width / this._game.width, this._height / this._game.height));
+  }
+
+  _determineSelectedCube(x, y) {
+    const selectedX = Math.floor((x - this._startCoords.x) / this._cellLength);
+    const selectedY = Math.floor((y - this._startCoords.y) / this._cellLength);
+
+    let newSelectedCube;
+
+    if (selectedX >= 0 && selectedX < this._game.width && selectedY >= 0 && selectedY < this._game.height) {
+      newSelectedCube = new Point(selectedX, selectedY);
+    } else {
+      newSelectedCube = null;
+    }
+
+    return newSelectedCube;
   }
 
   _draw() {
@@ -107,6 +134,9 @@ export class CubeGameRenderer {
 
   _select() {
     this._game.select(this._selectedCube);
+  }
+
+  _updateCursor() {
     document.body.style.cursor = this._game.selection.length > 0 ? 'pointer' : 'default';
   }
 }

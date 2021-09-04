@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function init() {
+  const ws = new WebSocket('ws://localhost:8080/ws');
+
   /** @type {HTMLCanvasElement} */
   const canvas = document.getElementById('game');
   const isTouch = Object.keys(window).indexOf('ontouchstart') !== -1;

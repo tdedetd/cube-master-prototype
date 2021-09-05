@@ -3,7 +3,7 @@
  * @param {Function} checkEmpty
  * @returns {boolean}
  */
-export function fall(list, checkEmpty) {
+export function fall(list, checkEmpty = null) {
   let emptyCount = 0;
 
   for (let i = list.length - 1; i >= 0; i--) {

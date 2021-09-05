@@ -1,0 +1,8 @@
+module.exports = {
+  MSG_GET_FULL_STATE: 0,
+  MSG_DESTROY: 1,
+  MSG_END_GAME: 2,
+  MSG_GET_SCORE: 3,
+  MSG_GAMEOVER: 4,
+  ERR_INVALID_FORMAT: -1
+};

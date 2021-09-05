@@ -1,6 +1,7 @@
 import { CubeGame } from "./cube-game";
 import { CubeGameRenderer } from "./cube-game-renderer";
 import { Point } from "./point";
+import { MSG_GET_FULL_STATE } from './constants';
 
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(init);
@@ -8,6 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function init() {
   const ws = new WebSocket('ws://localhost:8080/ws');
+
+  ws.onopen = e => {
+    ws.send(JSON.stringify({ code: MSG_GET_FULL_STATE }));
+  };
+
+  ws.onmessage = e => {
+    console.log(JSON.parse(e.data));
+  };
 
   /** @type {HTMLCanvasElement} */
   const canvas = document.getElementById('game');

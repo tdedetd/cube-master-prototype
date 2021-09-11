@@ -1,5 +1,5 @@
-import { Color } from './color';
-import { Point } from './point';
+import Color from './color';
+import Point from './point';
 import { Filler } from "./filler";
 import { fall } from './utils';
 

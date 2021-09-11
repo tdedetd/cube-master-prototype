@@ -1,4 +1,4 @@
-export class Color {
+export default class Color {
   /**
    * @param {number} r
    * @param {number} g
